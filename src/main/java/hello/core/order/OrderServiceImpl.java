@@ -1,15 +1,17 @@
 package hello.core.order;
 
+import hello.core.annotation.MainDiscountPolicy;
 import hello.core.discount.DiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
 import hello.core.member.MemoryMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
     private final MemberRepository memberRepository;
@@ -31,11 +33,13 @@ public class OrderServiceImpl implements OrderService {
     /***
      * lombok 적용으로 생성자 생략 가능
      */
-/*    // 1. Spring Container에 Bean 등록과 함께 의존 관계 주입
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+    // 1. Spring Container에 Bean 등록과 함께 의존 관계 주입
+    public OrderServiceImpl(MemberRepository memberRepository,
+            /*@Qualifier("mainDiscountPolicy")*/
+            /*@MainDiscountPolicy*/ DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
-    }*/
+    }
 
     // Spring Container에 Bean 등록과 동시에 의존 관계 주입
     @Override
@@ -51,3 +55,4 @@ public class OrderServiceImpl implements OrderService {
         return memberRepository;
     }
 }
+
